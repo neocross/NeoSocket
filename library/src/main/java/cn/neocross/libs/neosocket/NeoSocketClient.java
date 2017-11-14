@@ -3,14 +3,17 @@ package cn.neocross.libs.neosocket;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+
+import cn.neocross.libs.neosocket.callback.NeoSocketClientCallback;
 
 /**
  * Created by shenhua on 2017/11/13.
  * Email shenhuanet@126.com
+ *
+ * @author shenhua
  */
 public class NeoSocketClient {
 
@@ -19,25 +22,37 @@ public class NeoSocketClient {
     public NeoSocketClient(InetAddress inetAddress, int port) {
         try {
             socket = new Socket(inetAddress, port);
+            socket.setKeepAlive(true);
+            socket.setSoTimeout(5000);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void write(String msg) {
+        write(msg, null);
+    }
+
+    public void write(String msg, NeoSocketClientCallback callback) {
         try {
-            PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
-            printWriter.write(msg);
-            socket.close();
+            OutputStream outputStream = socket.getOutputStream();
+            msg += "\n";
+            outputStream.write(msg.getBytes("utf-8"));
+            if (callback != null) {
+                String result = read();
+                callback.onMessageReceived(result);
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            if (callback != null) {
+                callback.onStatusChange();
+            }
         }
     }
 
-    public String read() {
+    private String read() {
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            socket.close();
             return bufferedReader.readLine();
         } catch (IOException e) {
             e.printStackTrace();
