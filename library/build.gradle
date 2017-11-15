@@ -8,7 +8,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -29,3 +29,24 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     testCompile 'junit:junit:4.12'
 }
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'neosocket'
+    bintrayGroupName = 'neocross2017'
+    publishedGroupId = 'cn.neocross.libs'
+    libraryName = 'neosocket'
+    artifact = 'neosocket'
+    libraryDescription = 'neocross open source for socket fast develop library.'
+    siteUrl = 'https://github.com/neocross/NeoSocket'
+    gitUrl = 'https://github.com/neocross/NeoSocket.git'
+    libraryVersion = '1.0.0'
+    developerId = 'neocross'
+    developerName = 'neocross'
+    developerEmail = 'taotiejia@neocross.cn'
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+apply from: 'https://raw.githubusercontent.com/shenhuanet/JCenter/master/install.gradle'
+apply from: 'https://raw.githubusercontent.com/shenhuanet/JCenter/master/bintray.gradle'
