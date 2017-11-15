@@ -31,22 +31,14 @@ dependencies {
 }
 
 ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'neosocket'
-    bintrayGroupName = 'neocross2017'
-    publishedGroupId = 'cn.neocross.libs'
-    libraryName = 'neosocket'
-    artifact = 'neosocket'
-    libraryDescription = 'neocross open source for socket fast develop library.'
-    siteUrl = 'https://github.com/neocross/NeoSocket'
-    gitUrl = 'https://github.com/neocross/NeoSocket.git'
-    libraryVersion = '1.0.0'
-    developerId = 'neocross'
-    developerName = 'neocross'
-    developerEmail = 'taotiejia@neocross.cn'
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
+    repoOrg = 'neocross2017'
+    repoGroup = 'maven'
+    repoPkg = 'NeoSocket'
+    devName = 'shenhuanet'
+    devMail = 'shenhuanet@126.com'
+    libGroup = 'cn.neocross.libs'
+    libArtifact = 'neosocket'
+    libDesc = 'neocross open source for socket fast develop library.'
+    web = 'https://github.com/neocross/NeoSocket'
 }
-apply from: 'https://raw.githubusercontent.com/shenhuanet/JCenter/master/install.gradle'
-apply from: 'https://raw.githubusercontent.com/shenhuanet/JCenter/master/bintray.gradle'
+apply from: 'https://raw.githubusercontent.com/shenhuanet/JCenter/master/bintray_release.gradle'

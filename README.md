@@ -1,6 +1,6 @@
 # NeoSocket
 [![ownner](https://img.shields.io/badge/owner-neocross-green.svg)](http://www.neocorss.cn)
-[![maven](https://img.shields.io/badge/maven-v1.0.0-ff69b4.svg)](https://bintray.com/neocross2017/maven/neosocket)
+[![maven](https://img.shields.io/badge/maven-v1.0.0-ff69b4.svg)](https://bintray.com/neocross2017/maven/NeoSocket)
 [![license](https://img.shields.io/hexpm/l/plug.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![download aar](https://img.shields.io/badge/Download-aar-yellowgreen.svg)](https://dl.bintray.com/neocross2017/maven/cn/neocross/libs/neosocket/1.0.0/common-1.0.0.aar)
 
