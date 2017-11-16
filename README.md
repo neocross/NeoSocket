@@ -15,8 +15,8 @@ dependencies {
   compile 'cn.neocross.libs:neosocket:1.0.0'
 }
 ```
-or mavan
-```mavan
+or maven
+```maven
 <dependency>
   <groupId>cn.neocross.libs</groupId>
   <artifactId>neosocket</artifactId>
