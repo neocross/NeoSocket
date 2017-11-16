@@ -4,6 +4,8 @@
 [![license](https://img.shields.io/hexpm/l/plug.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![download aar](https://img.shields.io/badge/Download-aar-yellowgreen.svg)](https://dl.bintray.com/neocross2017/maven/cn/neocross/libs/neosocket/1.0.0/neosocket-1.0.0.aar)
 
+![logo](https://github.com/neocross/NeoSocket/blob/master/library/pom_icon.png)
+
 Socket.Java 快速开发框架，用于简单 Socket 层通讯，支持基于 Java NIO 技术的 TCP/UDP 应用程序开发、串口通讯等。
 
 ## Maven build settings
