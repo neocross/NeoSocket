@@ -1,8 +1,13 @@
 package cn.neocross.libs.neosocket;
 
+import android.content.Context;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 
+import cn.neocross.libs.neosocket.bean.InstantMessage;
 import cn.neocross.libs.neosocket.callback.NeoSocketServerCallback;
 import cn.neocross.libs.neosocket.callback.StatusType;
 import cn.neocross.libs.neosocket.thread.InstantMessageHandler;
@@ -51,6 +56,30 @@ public class NeoSocketServer {
 
     public InstantMessageHandler getInstantMessageHandler() {
         return instantMessageHandler;
+    }
+
+    public String getSelfIp(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        if (wifiManager == null) {
+            return "Error";
+        }
+        if (!wifiManager.isWifiEnabled()) {
+            wifiManager.setWifiEnabled(true);
+        }
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+        int ipAddress = wifiInfo.getIpAddress();
+        return intToIp(ipAddress);
+    }
+
+    public void push(InstantMessage message) {
+
+    }
+
+    private String intToIp(int i) {
+        return (i & 0xFF) + "." +
+                ((i >> 8) & 0xFF) + "." +
+                ((i >> 16) & 0xFF) + "." +
+                (i >> 24 & 0xFF);
     }
 
     /**

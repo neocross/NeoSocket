@@ -9,7 +9,15 @@ package cn.neocross.libs.neosocket.callback;
  */
 public interface NeoSocketClientCallback {
 
+    /**
+     * 状态改变时回调
+     */
     void onStatusChange();
 
+    /**
+     * 接收到服务端消息时回调
+     *
+     * @param msg json
+     */
     void onMessageReceived(String msg);
 }

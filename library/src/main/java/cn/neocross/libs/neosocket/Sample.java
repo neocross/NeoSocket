@@ -36,7 +36,7 @@ public class Sample {
         }
 
         NeoSocketClient client = new NeoSocketClient(InetAddress.getLocalHost(), 5556);
-        client.write("client say Hello!", new NeoSocketClientCallback() {
+        client.addClientListener(new NeoSocketClientCallback() {
             @Override
             public void onStatusChange() {
 
@@ -47,6 +47,7 @@ public class Sample {
                 System.out.println("Server return: " + msg);
             }
         });
+        client.send(new InstantMessage(0, "client say Hello!"));
         server.close();
     }
 }

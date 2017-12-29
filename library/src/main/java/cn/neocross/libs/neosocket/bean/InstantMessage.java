@@ -28,6 +28,11 @@ public class InstantMessage {
         this.message = message;
     }
 
+    public InstantMessage(int type, String message) {
+        this.type = type;
+        this.message = message;
+    }
+
     public Connection getConnection() {
         return connection;
     }
@@ -50,5 +55,20 @@ public class InstantMessage {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        if (connection == null) {
+            return "{\"ip\":null," +
+                    "\"type\":" + getType() + "," +
+                    "\"message\":\"" + getMessage() +
+                    "\"}";
+        } else {
+            return "{\"ip\":" + connection.getIp() + "," +
+                    "\"type\":" + getType() + "," +
+                    "\"message\":\"" + getMessage() +
+                    "\"}";
+        }
     }
 }
