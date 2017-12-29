@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements NeoSocketClientCa
 
     private NeoSocketClient mClient;
     private int mDefaultPort = 5556;
-    private String mIp = "192.168.16.16";
+    private String mIp = "192.168.16.17";
     private ThreadPoolExecutor mExecutor;
     private TextView mTextView;
     private EditText mEditText;

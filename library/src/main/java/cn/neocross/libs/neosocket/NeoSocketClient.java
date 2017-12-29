@@ -67,13 +67,9 @@ public class NeoSocketClient {
 
         @Override
         public NeoSocketClient call() throws Exception {
-            try {
-                socket = new Socket(InetAddress.getByName(ip), port);
-                socket.setKeepAlive(true);
-                socket.setSoTimeout(5000);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            socket = new Socket(InetAddress.getByName(ip), port);
+            socket.setKeepAlive(true);
+            socket.setSoTimeout(5000);
             return NeoSocketClient.this;
         }
     }

@@ -1,8 +1,8 @@
 # NeoSocket
 [![ownner](https://img.shields.io/badge/owner-neocross-green.svg)](http://www.neocorss.cn)
-[![maven](https://img.shields.io/badge/maven-v1.0.2-ff69b4.svg)](https://bintray.com/neocross2017/maven/NeoSocket)
+[![maven](https://img.shields.io/badge/maven-v1.0.3-ff69b4.svg)](https://bintray.com/neocross2017/maven/NeoSocket)
 [![license](https://img.shields.io/hexpm/l/plug.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
-[![download aar](https://img.shields.io/badge/Download-aar-yellowgreen.svg)](https://dl.bintray.com/neocross2017/maven/cn/neocross/libs/neosocket/1.0.2/neosocket-1.0.2.aar)
+[![download aar](https://img.shields.io/badge/Download-aar-yellowgreen.svg)](https://dl.bintray.com/neocross2017/maven/cn/neocross/libs/neosocket/1.0.3/neosocket-1.0.3.aar)
 
 ![logo](https://github.com/neocross/NeoSocket/blob/master/library/pom_icon.png)
 
@@ -12,7 +12,7 @@ Socket.Java 快速开发框架，用于简单 Socket 层通讯，支持基于 Ja
 build.gradle
 ```gradle
 dependencies {
-  compile 'cn.neocross.libs:neosocket:1.0.2'
+  compile 'cn.neocross.libs:neosocket:1.0.3'
 }
 ```
 or maven
@@ -20,13 +20,13 @@ or maven
 <dependency>
   <groupId>cn.neocross.libs</groupId>
   <artifactId>neosocket</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
   <type>pom</type>
 </dependency>
 ```
 or lvy
 ```lvy
-<dependency org='cn.neocross.libs' name='neosocket' rev='1.0.2'>
+<dependency org='cn.neocross.libs' name='neosocket' rev='1.0.3'>
   <artifact name='neosocket' ext='pom' ></artifact>
 </dependency>
 ```
