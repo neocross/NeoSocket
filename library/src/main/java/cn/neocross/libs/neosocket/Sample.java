@@ -3,6 +3,7 @@ package cn.neocross.libs.neosocket;
 import java.net.InetAddress;
 
 import cn.neocross.libs.neosocket.bean.InstantMessage;
+import cn.neocross.libs.neosocket.bean.MsgEngine;
 import cn.neocross.libs.neosocket.callback.NeoSocketClientCallback;
 import cn.neocross.libs.neosocket.callback.NeoSocketServerCallback;
 import cn.neocross.libs.neosocket.callback.StatusType;
@@ -17,17 +18,17 @@ public class Sample {
 
     public static void main(String[] args) throws Exception {
         NeoSocketServer server = new NeoSocketServer(5556, new NeoSocketServerCallback() {
+
             @Override
-            public void onServerStatusChanged(StatusType type) {
-                System.out.println("Server status: " + type);
+            public void onServerStatusChanged(MsgEngine msgEngine) {
+
             }
 
             @Override
-            public void onServerMsgReceived(InstantMessage instantMessage) {
-                System.out.println("Server receive the client message: " + instantMessage.getMessage());
+            public void onServerMsgReceived(String message) {
+                System.out.println("Server receive the client message: " + message);
             }
         });
-
 
         try {
             Thread.sleep(1000);
@@ -47,7 +48,7 @@ public class Sample {
                 System.out.println("Server return: " + msg);
             }
         });
-        client.send(new InstantMessage(0, "client say Hello!"));
+        client.send(new InstantMessage(StatusType.TYPE_MSG, "client say Hello!"));
         server.close();
     }
 }

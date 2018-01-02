@@ -1,10 +1,15 @@
 package cn.neocross.libs.neosocket.thread;
 
+import com.google.gson.Gson;
+
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
+import cn.neocross.libs.neosocket.bean.InstantMessage;
+import cn.neocross.libs.neosocket.callback.StatusType;
 
 /**
  * Created by shenhua on 2017-12-29-0029.
@@ -27,6 +32,11 @@ public class Communi {
          */
         return new ThreadPoolExecutor(2, 5, 10, TimeUnit.SECONDS,
                 new ArrayBlockingQueue<Runnable>(2), threadFactory);
+    }
+
+    public static boolean isClose(Gson gson, String msg) {
+        InstantMessage instantMessage = gson.fromJson(msg, InstantMessage.class);
+        return instantMessage.getType() == StatusType.TYPE_DISCONNECT;
     }
 
 }

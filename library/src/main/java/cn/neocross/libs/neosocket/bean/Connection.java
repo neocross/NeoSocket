@@ -13,7 +13,7 @@ import java.net.Socket;
  */
 public class Connection {
 
-    private Socket socket;
+    private transient Socket socket;
     /**
      * 已连接设备的IP
      */
@@ -22,6 +22,10 @@ public class Connection {
     public Connection(Socket socket) {
         this.socket = socket;
         this.ip = socket.getInetAddress().toString();
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public String getIp() {

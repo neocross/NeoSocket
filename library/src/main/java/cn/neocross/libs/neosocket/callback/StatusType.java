@@ -35,7 +35,11 @@ public enum StatusType {
     /**
      * 与客服端断开连接
      */
-    TYPE_DISCONNECT(4);
+    TYPE_DISCONNECT(4),
+    /**
+     * 通讯中
+     */
+    TYPE_MSG(5);
 
     StatusType(int type) {
     }

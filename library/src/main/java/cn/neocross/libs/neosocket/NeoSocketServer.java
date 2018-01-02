@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 import cn.neocross.libs.neosocket.bean.InstantMessage;
+import cn.neocross.libs.neosocket.bean.MsgEngine;
 import cn.neocross.libs.neosocket.callback.NeoSocketServerCallback;
 import cn.neocross.libs.neosocket.callback.StatusType;
 import cn.neocross.libs.neosocket.thread.InstantMessageHandler;
@@ -28,15 +29,15 @@ public class NeoSocketServer {
 
     public NeoSocketServer(int port, NeoSocketServerCallback messageCallback) {
         this.messageCallback = messageCallback;
-        messageCallback.onServerStatusChanged(StatusType.TYPE_SERVER_STARTING);
+        messageCallback.onServerStatusChanged(new MsgEngine(StatusType.TYPE_SERVER_STARTING));
         try {
             serverSocket = new ServerSocket(port);
             listeningThread = new ListeningThread(this, serverSocket);
             listeningThread.start();
-            messageCallback.onServerStatusChanged(StatusType.TYPE_SERVER_STARTED);
+            messageCallback.onServerStatusChanged(new MsgEngine(StatusType.TYPE_SERVER_STARTED));
         } catch (IOException e) {
             e.printStackTrace();
-            messageCallback.onServerStatusChanged(StatusType.TYPE_SERVER_ERROR);
+            messageCallback.onServerStatusChanged(new MsgEngine(StatusType.TYPE_SERVER_ERROR));
             return;
         }
         instantMessageHandler = new InstantMessageHandler(this.messageCallback);

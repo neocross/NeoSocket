@@ -1,5 +1,7 @@
 package cn.neocross.libs.neosocket;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,8 +12,10 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import cn.neocross.libs.neosocket.bean.Connection;
 import cn.neocross.libs.neosocket.bean.InstantMessage;
 import cn.neocross.libs.neosocket.callback.NeoSocketClientCallback;
+import cn.neocross.libs.neosocket.callback.StatusType;
 import cn.neocross.libs.neosocket.thread.Communi;
 
 /**
@@ -23,14 +27,18 @@ import cn.neocross.libs.neosocket.thread.Communi;
 public class NeoSocketClient {
 
     private Socket socket;
+    private Connection connection;
     private ThreadPoolExecutor mExecutor;
     private NeoSocketClientCallback clientCallback;
+    private Gson gson;
 
     public NeoSocketClient() {
         mExecutor = new Communi().create();
+        gson = new Gson();
     }
 
     public NeoSocketClient(InetAddress inetAddress, int port) {
+        gson = new Gson();
         try {
             socket = new Socket(inetAddress, port);
             socket.setKeepAlive(true);
@@ -70,6 +78,7 @@ public class NeoSocketClient {
             socket = new Socket(InetAddress.getByName(ip), port);
             socket.setKeepAlive(true);
             socket.setSoTimeout(5000);
+            connection = new Connection(socket);
             return NeoSocketClient.this;
         }
     }
@@ -80,18 +89,13 @@ public class NeoSocketClient {
      * @param instantMessage InstantMessage
      */
     public void send(InstantMessage instantMessage) {
+        connection.setIp(socket.getLocalAddress().toString());
+        instantMessage.setConnection(connection);
         mExecutor.submit(new MessageRunnable(instantMessage));
     }
 
     public void close() {
-        mExecutor.submit(new MessageRunnable(new InstantMessage(-1, "disconnect")));
-        if (socket != null && !socket.isClosed()) {
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        send(new InstantMessage(StatusType.TYPE_DISCONNECT, "disconnect"));
     }
 
     private class MessageRunnable implements Runnable {
@@ -112,6 +116,15 @@ public class NeoSocketClient {
                 if (clientCallback != null) {
                     String result = read();
                     clientCallback.onMessageReceived(result);
+                }
+                if (Communi.isClose(gson, msg)) {
+                    if (socket != null && !socket.isClosed()) {
+                        try {
+                            socket.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();

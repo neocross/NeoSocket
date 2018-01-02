@@ -1,5 +1,9 @@
 package cn.neocross.libs.neosocket.bean;
 
+import com.google.gson.Gson;
+
+import cn.neocross.libs.neosocket.callback.StatusType;
+
 /**
  * Created by shenhua on 2017-11-14-0014.
  *
@@ -9,26 +13,16 @@ package cn.neocross.libs.neosocket.bean;
 public class InstantMessage {
 
     private Connection connection;
-    private int type;
+    private StatusType type;
     private String message;
 
-    public InstantMessage(Connection connection, int type, String message) {
+    public InstantMessage(Connection connection, StatusType type, String message) {
         this.connection = connection;
         this.type = type;
         this.message = message;
     }
 
-    public InstantMessage(Connection connection, int type) {
-        this.connection = connection;
-        this.type = type;
-    }
-
-    public InstantMessage(Connection connection, String message) {
-        this.connection = connection;
-        this.message = message;
-    }
-
-    public InstantMessage(int type, String message) {
+    public InstantMessage(StatusType type, String message) {
         this.type = type;
         this.message = message;
     }
@@ -41,11 +35,11 @@ public class InstantMessage {
         this.connection = connection;
     }
 
-    public int getType() {
+    public StatusType getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(StatusType type) {
         this.type = type;
     }
 
@@ -59,16 +53,6 @@ public class InstantMessage {
 
     @Override
     public String toString() {
-        if (connection == null) {
-            return "{\"ip\":null," +
-                    "\"type\":" + getType() + "," +
-                    "\"message\":\"" + getMessage() +
-                    "\"}";
-        } else {
-            return "{\"ip\":" + connection.getIp() + "," +
-                    "\"type\":" + getType() + "," +
-                    "\"message\":\"" + getMessage() +
-                    "\"}";
-        }
+        return new Gson().toJson(this);
     }
 }
