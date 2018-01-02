@@ -1,18 +1,26 @@
 # NeoSocket
 [![ownner](https://img.shields.io/badge/owner-neocross-green.svg)](http://www.neocorss.cn)
-[![maven](https://img.shields.io/badge/maven-v1.0.3-ff69b4.svg)](https://bintray.com/neocross2017/maven/NeoSocket)
+[![maven](https://img.shields.io/badge/maven-v1.0.4-ff69b4.svg)](https://bintray.com/neocross2017/maven/NeoSocket)
 [![license](https://img.shields.io/hexpm/l/plug.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
-[![download aar](https://img.shields.io/badge/Download-aar-yellowgreen.svg)](https://dl.bintray.com/neocross2017/maven/cn/neocross/libs/neosocket/1.0.3/neosocket-1.0.3.aar)
+[![download aar](https://img.shields.io/badge/Download-aar-yellowgreen.svg)](https://dl.bintray.com/neocross2017/maven/cn/neocross/libs/neosocket/1.0.4/neosocket-1.0.4.aar)
 
 ![logo](https://github.com/neocross/NeoSocket/blob/master/library/pom_icon.png)
 
 Socket.Java 快速开发框架，用于简单 Socket 层通讯，支持基于 Java NIO 技术的 TCP/UDP 应用程序开发、串口通讯等。
 
+* 数据通过JSON传递
+* 可实现双向通讯,一个机器同时拥有服务端和客户端
+* 多线程消息循环,支持多客户端
+* 主线程回调
+
+![](https://github.com/neocross/NeoSocket/blob/master/screenshot/pic_server.png)
+![](https://github.com/neocross/NeoSocket/blob/master/screenshot/pic_client.png)
+
 ## Maven build settings
 build.gradle
 ```gradle
 dependencies {
-  compile 'cn.neocross.libs:neosocket:1.0.3'
+  compile 'cn.neocross.libs:neosocket:1.0.4'
 }
 ```
 or maven
@@ -20,13 +28,13 @@ or maven
 <dependency>
   <groupId>cn.neocross.libs</groupId>
   <artifactId>neosocket</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <type>pom</type>
 </dependency>
 ```
 or lvy
 ```lvy
-<dependency org='cn.neocross.libs' name='neosocket' rev='1.0.3'>
+<dependency org='cn.neocross.libs' name='neosocket' rev='1.0.4'>
   <artifact name='neosocket' ext='pom' ></artifact>
 </dependency>
 ```
@@ -41,12 +49,12 @@ or lvy
 ```java
 NeoSocketServer server = new NeoSocketServer(5556, new NeoSocketServerCallback() {
     @Override
-    public void onServerStatusChanged(StatusType type) {
-        System.out.println("Server status: " + type);
+    public void onServerStatusChanged(MsgEngine msgEngine) {
+        System.out.println("Server status: " + msgEngine);
     }
     @Override
-    public void onServerMsgReceived(InstantMessage instantMessage) {
-        System.out.println("Server receive the client message: " + instantMessage.getMessage());
+    public void onServerMsgReceived(String message) {
+        System.out.println("Server receive the client message: " + message);
     }
 });
 ```
@@ -56,12 +64,14 @@ NeoSocketClient client = new NeoSocketClient(InetAddress.getLocalHost(), 5556);
 ```
 3. Send Message
 ```java
-client.write("client say Hello!", new NeoSocketClientCallback() {
+client.send(new InstantMessage(StatusType.TYPE_MSG, "client say Hello!"));
+client.addClientListener(new NeoSocketClientCallback() {
     @Override
-    public void onStatusChange() {
+    public void onClientStatusChange() {
+    System.out.println("ClientStatusChanged");
     }
     @Override
-    public void onMessageReceived(String msg) {
+    public void onClientMessageReceived(String msg) {
         System.out.println("Server return: " + msg);
     }
 });

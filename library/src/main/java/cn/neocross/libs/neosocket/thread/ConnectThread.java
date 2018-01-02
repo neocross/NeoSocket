@@ -14,6 +14,7 @@ import cn.neocross.libs.neosocket.NeoSocketServer;
 import cn.neocross.libs.neosocket.bean.Connection;
 import cn.neocross.libs.neosocket.bean.InstantMessage;
 import cn.neocross.libs.neosocket.bean.MsgEngine;
+import cn.neocross.libs.neosocket.callback.HandlerType;
 import cn.neocross.libs.neosocket.callback.StatusType;
 
 /**
@@ -56,17 +57,17 @@ class ConnectThread extends Thread {
 
     @Override
     public void run() {
-        getMessage(0, new MsgEngine(StatusType.TYPE_CONNECTING)).sendToTarget();
+        getMessage(HandlerType.TYPE_SERVER_STATUS, new MsgEngine(StatusType.TYPE_CONNECTING)).sendToTarget();
         while (isRunning) {
             if (socket.isClosed()) {
                 isRunning = false;
-                getMessage(0, new MsgEngine(StatusType.TYPE_DISCONNECT)).sendToTarget();
+                getMessage(HandlerType.TYPE_SERVER_STATUS, new MsgEngine(StatusType.TYPE_DISCONNECT)).sendToTarget();
                 break;
             }
             try {
                 if (!isConnect) {
                     System.out.println("ConnectThread-- 已连接客户端ip:" + connection.getIp());
-                    getMessage(0, new MsgEngine(StatusType.TYPE_CONNECTED, connection.getIp())).sendToTarget();
+                    getMessage(HandlerType.TYPE_SERVER_STATUS, new MsgEngine(StatusType.TYPE_CONNECTED, connection.getIp())).sendToTarget();
                 }
                 InputStreamReader reader = new InputStreamReader(socket.getInputStream());
                 BufferedReader bufferedReader = new BufferedReader(reader);
@@ -75,20 +76,20 @@ class ConnectThread extends Thread {
                     System.out.println("ConnectThread-- 接收到消息: " + msg);
                     if (Communi.isClose(gson, msg)) {
                         isConnect = false;
-                        getMessage(0, new MsgEngine(StatusType.TYPE_DISCONNECT)).sendToTarget();
+                        getMessage(HandlerType.TYPE_SERVER_STATUS, new MsgEngine(StatusType.TYPE_DISCONNECT)).sendToTarget();
                         createCallbackMsg("success");
                         // 该方法可以是服务端断开
                         // neoSocketServer.close();
                         break;
                     }
-                    getMessage(1, new MsgEngine(StatusType.TYPE_MSG, msg)).sendToTarget();
+                    getMessage(HandlerType.TYPE_SERVER_MSG, new MsgEngine(StatusType.TYPE_MSG, msg)).sendToTarget();
                     createCallbackMsg("200");
                 }
                 isConnect = true;
             } catch (IOException e) {
                 e.printStackTrace();
                 isRunning = false;
-                getMessage(0, new MsgEngine(StatusType.TYPE_DISCONNECT)).sendToTarget();
+                getMessage(HandlerType.TYPE_SERVER_STATUS, new MsgEngine(StatusType.TYPE_DISCONNECT)).sendToTarget();
                 break;
             }
         }

@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.Message;
 
 import cn.neocross.libs.neosocket.bean.MsgEngine;
+import cn.neocross.libs.neosocket.callback.HandlerType;
+import cn.neocross.libs.neosocket.callback.NeoSocketClientCallback;
 import cn.neocross.libs.neosocket.callback.NeoSocketServerCallback;
 
 /**
@@ -14,31 +16,31 @@ import cn.neocross.libs.neosocket.callback.NeoSocketServerCallback;
  */
 public class InstantMessageHandler extends Handler {
 
-    private NeoSocketServerCallback callback;
+    private NeoSocketServerCallback serverCallback;
+    private NeoSocketClientCallback clientCallback;
 
     public InstantMessageHandler(NeoSocketServerCallback callback) {
-        this.callback = callback;
+        this.serverCallback = callback;
+    }
+
+    public InstantMessageHandler(NeoSocketClientCallback callback) {
+        this.clientCallback = callback;
     }
 
     @Override
     public void handleMessage(Message msg) {
         super.handleMessage(msg);
-        if (msg.what == 0) {
+        if (msg.what == HandlerType.TYPE_SERVER_STATUS) {
             MsgEngine engine = (MsgEngine) msg.obj;
-            callback.onServerStatusChanged(engine);
-        } else if (msg.what == 1) {
+            serverCallback.onServerStatusChanged(engine);
+        } else if (msg.what == HandlerType.TYPE_SERVER_MSG) {
             MsgEngine engine = (MsgEngine) msg.obj;
-            callback.onServerMsgReceived(engine.getMsg());
+            serverCallback.onServerMsgReceived(engine.getMsg());
+        } else if (msg.what == HandlerType.TYPE_CLIENT_STATUS) {
+            clientCallback.onClientStatusChange();
+        } else if (msg.what == HandlerType.TYPE_CLIENT_MSG) {
+            MsgEngine engine = (MsgEngine) msg.obj;
+            clientCallback.onClientMessageReceived(engine.getMsg());
         }
-
-
-//        if (msg.what == 1) {
-//            StatusType type = (StatusType) msg.obj;
-//            callback.onServerStatusChanged(type);
-//        } else if (msg.what == 2) {
-//            callback.onServerMsgReceived((InstantMessage) msg.obj);
-//        } else {
-//
-//        }
     }
 }

@@ -14,9 +14,12 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import cn.neocross.libs.neosocket.bean.Connection;
 import cn.neocross.libs.neosocket.bean.InstantMessage;
+import cn.neocross.libs.neosocket.bean.MsgEngine;
+import cn.neocross.libs.neosocket.callback.HandlerType;
 import cn.neocross.libs.neosocket.callback.NeoSocketClientCallback;
 import cn.neocross.libs.neosocket.callback.StatusType;
 import cn.neocross.libs.neosocket.thread.Communi;
+import cn.neocross.libs.neosocket.thread.InstantMessageHandler;
 
 /**
  * Created by shenhua on 2017/11/13.
@@ -30,6 +33,7 @@ public class NeoSocketClient {
     private Connection connection;
     private ThreadPoolExecutor mExecutor;
     private NeoSocketClientCallback clientCallback;
+    private InstantMessageHandler instantMessageHandler;
     private Gson gson;
 
     public NeoSocketClient() {
@@ -50,6 +54,7 @@ public class NeoSocketClient {
 
     public void addClientListener(NeoSocketClientCallback clientCallback) {
         this.clientCallback = clientCallback;
+        instantMessageHandler = new InstantMessageHandler(clientCallback);
     }
 
     /**
@@ -69,6 +74,9 @@ public class NeoSocketClient {
         int port;
 
         ConnectRunnable(String ip, int port) {
+            if (ip.startsWith("/")) {
+                ip = ip.substring(1, ip.length());
+            }
             this.ip = ip;
             this.port = port;
         }
@@ -113,10 +121,7 @@ public class NeoSocketClient {
                 OutputStream outputStream = socket.getOutputStream();
                 msg += "\n";
                 outputStream.write(msg.getBytes("utf-8"));
-                if (clientCallback != null) {
-                    String result = read();
-                    clientCallback.onMessageReceived(result);
-                }
+                instantMessageHandler.obtainMessage(HandlerType.TYPE_CLIENT_MSG, new MsgEngine(StatusType.TYPE_MSG, read())).sendToTarget();
                 if (Communi.isClose(gson, msg)) {
                     if (socket != null && !socket.isClosed()) {
                         try {
@@ -128,9 +133,7 @@ public class NeoSocketClient {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                if (clientCallback != null) {
-                    clientCallback.onStatusChange();
-                }
+                instantMessageHandler.obtainMessage(HandlerType.TYPE_CLIENT_STATUS).sendToTarget();
             }
         }
     }
@@ -144,4 +147,5 @@ public class NeoSocketClient {
             return null;
         }
     }
+
 }

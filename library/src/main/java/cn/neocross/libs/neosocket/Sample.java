@@ -39,12 +39,12 @@ public class Sample {
         NeoSocketClient client = new NeoSocketClient(InetAddress.getLocalHost(), 5556);
         client.addClientListener(new NeoSocketClientCallback() {
             @Override
-            public void onStatusChange() {
+            public void onClientStatusChange() {
 
             }
 
             @Override
-            public void onMessageReceived(String msg) {
+            public void onClientMessageReceived(String msg) {
                 System.out.println("Server return: " + msg);
             }
         });
