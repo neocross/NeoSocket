@@ -19,5 +19,5 @@ public interface NeoSocketClientCallback {
      *
      * @param msg json
      */
-    void onClientMessageReceived(String msg);
+    void onClientMessageReceived(Object msg);
 }

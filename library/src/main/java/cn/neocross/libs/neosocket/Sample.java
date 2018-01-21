@@ -25,7 +25,7 @@ public class Sample {
             }
 
             @Override
-            public void onServerMsgReceived(String message) {
+            public void onServerMsgReceived(Object message) {
                 System.out.println("Server receive the client message: " + message);
             }
         });
@@ -44,7 +44,7 @@ public class Sample {
             }
 
             @Override
-            public void onClientMessageReceived(String msg) {
+            public void onClientMessageReceived(Object msg) {
                 System.out.println("Server return: " + msg);
             }
         });

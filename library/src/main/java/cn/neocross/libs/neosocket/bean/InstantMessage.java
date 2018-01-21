@@ -14,15 +14,15 @@ public class InstantMessage {
 
     private Connection connection;
     private StatusType type;
-    private String message;
+    private Object message;
 
-    public InstantMessage(Connection connection, StatusType type, String message) {
+    public InstantMessage(Connection connection, StatusType type, Object message) {
         this.connection = connection;
         this.type = type;
         this.message = message;
     }
 
-    public InstantMessage(StatusType type, String message) {
+    public InstantMessage(StatusType type, Object message) {
         this.type = type;
         this.message = message;
     }
@@ -43,11 +43,11 @@ public class InstantMessage {
         this.type = type;
     }
 
-    public String getMessage() {
+    public Object getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(Object message) {
         this.message = message;
     }
 

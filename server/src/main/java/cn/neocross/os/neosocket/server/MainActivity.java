@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NeoSocketServerCa
                 break;
             case TYPE_CONNECTED:
                 setText("客户端已连接 : " + msgEngine.getMsg());
-                mClient = mServer.createNeoSocketClient(msgEngine.getMsg(), 5557, this);
+                mClient = mServer.createNeoSocketClient(msgEngine.getMsg().toString(), 5557, this);
                 break;
             case TYPE_DISCONNECT:
                 setText("客户端断开连接");
@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity implements NeoSocketServerCa
     }
 
     @Override
-    public void onServerMsgReceived(String message) {
-        setText(message);
+    public void onServerMsgReceived(Object message) {
+        setText(message.toString());
     }
 
     private void setText(String msg) {
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NeoSocketServerCa
     }
 
     @Override
-    public void onClientMessageReceived(final String msg) {
-        setText(msg);
+    public void onClientMessageReceived(final Object msg) {
+        setText(msg.toString());
     }
 }

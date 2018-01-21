@@ -24,5 +24,5 @@ public interface NeoSocketServerCallback {
      *
      * @param message 及时消息体
      */
-    void onServerMsgReceived(String message);
+    void onServerMsgReceived(Object message);
 }

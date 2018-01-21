@@ -11,13 +11,13 @@ import cn.neocross.libs.neosocket.callback.StatusType;
 public class MsgEngine {
 
     private StatusType type;
-    private String msg;
+    private Object msg;
 
     public MsgEngine(StatusType type) {
         this.type = type;
     }
 
-    public MsgEngine(StatusType type, String msg) {
+    public MsgEngine(StatusType type, Object msg) {
         this.type = type;
         this.msg = msg;
     }
@@ -30,11 +30,11 @@ public class MsgEngine {
         this.type = type;
     }
 
-    public String getMsg() {
+    public Object getMsg() {
         return msg;
     }
 
-    public void setMsg(String msg) {
+    public void setMsg(Object msg) {
         this.msg = msg;
     }
 }
