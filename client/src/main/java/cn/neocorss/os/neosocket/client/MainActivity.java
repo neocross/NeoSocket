@@ -100,8 +100,8 @@ public class MainActivity extends AppCompatActivity implements NeoSocketClientCa
     }
 
     @Override
-    public void onClientMessageReceived(String msg) {
-        setText(msg);
+    public void onClientMessageReceived(Object msg) {
+        setText(msg.toString());
     }
 
     @Override
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements NeoSocketClientCa
     }
 
     @Override
-    public void onServerMsgReceived(String message) {
-        setText(message);
+    public void onServerMsgReceived(Object message) {
+        setText(message.toString());
     }
 }

@@ -1,8 +1,8 @@
 # NeoSocket
 [![ownner](https://img.shields.io/badge/owner-neocross-green.svg)](http://www.neocorss.cn)
-[![maven](https://img.shields.io/badge/maven-v1.0.4-ff69b4.svg)](https://bintray.com/neocross2017/maven/NeoSocket)
+[![maven](https://img.shields.io/badge/maven-v1.0.5-ff69b4.svg)](https://bintray.com/neocross2017/maven/NeoSocket)
 [![license](https://img.shields.io/hexpm/l/plug.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
-[![download aar](https://img.shields.io/badge/Download-aar-yellowgreen.svg)](https://dl.bintray.com/neocross2017/maven/cn/neocross/libs/neosocket/1.0.4/neosocket-1.0.4.aar)
+[![download aar](https://img.shields.io/badge/Download-aar-yellowgreen.svg)](https://dl.bintray.com/neocross2017/maven/cn/neocross/libs/neosocket/1.0.5/neosocket-1.0.5.aar)
 
 ![logo](https://github.com/neocross/NeoSocket/blob/master/library/pom_icon.png)
 
@@ -20,7 +20,7 @@ Socket.Java 快速开发框架，用于简单 Socket 层通讯，支持基于 Ja
 build.gradle
 ```gradle
 dependencies {
-  compile 'cn.neocross.libs:neosocket:1.0.4'
+  compile 'cn.neocross.libs:neosocket:1.0.5'
 }
 ```
 or maven
@@ -28,13 +28,13 @@ or maven
 <dependency>
   <groupId>cn.neocross.libs</groupId>
   <artifactId>neosocket</artifactId>
-  <version>1.0.4</version>
+  <version>1.0.5</version>
   <type>pom</type>
 </dependency>
 ```
 or lvy
 ```lvy
-<dependency org='cn.neocross.libs' name='neosocket' rev='1.0.4'>
+<dependency org='cn.neocross.libs' name='neosocket' rev='1.0.5'>
   <artifact name='neosocket' ext='pom' ></artifact>
 </dependency>
 ```
@@ -53,8 +53,8 @@ NeoSocketServer server = new NeoSocketServer(5556, new NeoSocketServerCallback()
         System.out.println("Server status: " + msgEngine);
     }
     @Override
-    public void onServerMsgReceived(String message) {
-        System.out.println("Server receive the client message: " + message);
+    public void onServerMsgReceived(Object message) {
+        System.out.println("Server receive the client message: " + message.toString());
     }
 });
 ```
@@ -71,8 +71,8 @@ client.addClientListener(new NeoSocketClientCallback() {
     System.out.println("ClientStatusChanged");
     }
     @Override
-    public void onClientMessageReceived(String msg) {
-        System.out.println("Server return: " + msg);
+    public void onClientMessageReceived(Object msg) {
+        System.out.println("Server return: " + msg.toString);
     }
 });
 ```
