@@ -92,7 +92,7 @@ public class NeoSocketServer {
             listeningThread.interrupt();
             try {
                 serverSocket.close();
-                getInstantMessageHandler().obtainMessage(HandlerType.TYPE_SERVER_MSG, StatusType.TYPE_SERVER_STOP).sendToTarget();
+                getInstantMessageHandler().obtainMessage(HandlerType.TYPE_SERVER_STATUS, new MsgEngine(StatusType.TYPE_SERVER_STOP)).sendToTarget();
             } catch (IOException e) {
                 e.printStackTrace();
             }

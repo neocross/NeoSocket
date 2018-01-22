@@ -6,7 +6,6 @@ import java.net.Socket;
 import java.util.Vector;
 
 import cn.neocross.libs.neosocket.NeoSocketServer;
-import cn.neocross.libs.neosocket.callback.NeoSocketServerCallback;
 
 /**
  * 阻塞式监听线程
@@ -19,7 +18,6 @@ public class ListeningThread extends Thread {
 
     private NeoSocketServer neoSocketServer;
     private ServerSocket serverSocket;
-    private NeoSocketServerCallback serverCallback;
     /**
      * 自增长的对象数组,保存已连接线程
      */
